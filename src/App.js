@@ -1,25 +1,37 @@
-import logo from './logo.svg';
 import './App.css';
+import Main from './Component/Main';
+import 'rsuite/lib/styles/index.less';
+import React from 'react';
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { windowWidth: window.innerWidth };
+    this.handleResize = this.handleResize.bind(this);
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  }
+
+ handleResize (e){
+  this.setState({ windowWidth: window.innerWidth });
+ };
+
+ componentDidMount() {
+  window.addEventListener("resize", this.handleResize);
+ }
+
+ componentWillUnmount() {
+  window.addEventListener("resize", this.handleResize);
+ } 
+  render(){
+    const { windowWidth } = this.state; 
+    return (
+    <>
+    <div>Current window width: {windowWidth}</div>
+    <Main/>
+    </>
+       
+    );
+  }
+  
 }
 
 export default App;
