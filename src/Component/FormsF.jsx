@@ -13,16 +13,14 @@ export default class FormsF extends React.Component {
       posts:[],
         jobTitle: '',
         description: '',
-        validErr: false
+        validErr: false,
+        
     };
 
     this.handleChangeJobTitle = this.handleChangeJobTitle.bind(this);
     this.handleChangeDescription = this.handleChangeDescription.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-  
- 
-
 
   handleChangeJobTitle(event) {
     this.setState({jobTitle: event.target.value});
@@ -37,7 +35,7 @@ export default class FormsF extends React.Component {
     }
     if(obj.jobTitle !== '' && obj.description !== ''){
       
-      this.state.posts.push(obj);
+      this.state.posts.unshift(obj);
 
       this.setState({description:''})
       this.setState({jobTitle:''})
@@ -88,10 +86,11 @@ export default class FormsF extends React.Component {
           {this.state.posts.map((post, index)=>{   
         return (
           <div key={index}>
-            <Posts />
+            <Posts post = {post} />
           </div>
         );   
     })}
+    
        </>
       );
     }

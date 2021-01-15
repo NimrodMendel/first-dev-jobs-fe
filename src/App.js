@@ -2,6 +2,12 @@ import './App.css';
 import Main from './Component/Main';
 import 'rsuite/lib/styles/index.less';
 import React from 'react';
+import MyProfile from './Component/myprofile/myProfile'
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+} from "react-router-dom";
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -26,7 +32,20 @@ class App extends React.Component {
     return (
     <>
     <div>Current window width: {windowWidth}</div>
-    <Main/>
+    <Router>
+        <Switch>
+          <Route exact path="/">
+          <Main/>
+          </Route>
+          <Route path="/myprofile">
+            <MyProfile/>
+          </Route>
+          <Route path="/dashboard">
+            
+          </Route>
+        </Switch>
+    </Router>
+   
     </>
        
     );
