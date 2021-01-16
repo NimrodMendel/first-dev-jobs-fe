@@ -1,5 +1,5 @@
 
-import  React  from 'react';
+import React, { useState, useEffect } from 'react';
 import 'antd/dist/antd.css'
 import  FormsF from './FormsF'
 import { Row, Col } from 'antd';
@@ -16,32 +16,28 @@ const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
 
 
- class SideBar extends React.Component {
-  state = {
-    collapsed: true,
-  };
-
-  onCollapse = collapsed => {
-    this.setState({ collapsed });
+ function SideBar(props){
+  const [collapsed, setCollapsed] = useState(true);
+  const onCollapse = () => {
+    if(collapsed === true){
+      setCollapsed(false);
+    }else{
+      setCollapsed(true);
+    }
   };
   
-  navtoProfile() {
-    this.props.history.push("/myprofile");
+  function navtoProfile() {
+    props.history.push("/myprofile");
   }
-  navtoFeed() {
-    this.props.history.push("/");
-  }
-  render() {
-    const { collapsed } = this.state;
     return (
       <Layout style={{ minHeight: '100vh' }}>
-        <Sider collapsible collapsed={collapsed} onCollapse={this.onCollapse}>
+        <Sider collapsible collapsed={collapsed} onCollapse={onCollapse}>
           <div className="logo" />
           <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
             <Menu.Item key="1" icon={<MacCommandOutlined />}>
               Feed
             </Menu.Item>
-            <Menu.Item onClick={this.navtoProfile.bind(this)} key="2" icon={<UserOutlined />}>
+            <Menu.Item onClick={navtoProfile} key="2" icon={<UserOutlined />}>
               My Profile
             </Menu.Item>
             
@@ -86,7 +82,7 @@ const { SubMenu } = Menu;
         </Layout>
       </Layout>
     );
-  }
+  
 }
 
 export default withRouter (SideBar);

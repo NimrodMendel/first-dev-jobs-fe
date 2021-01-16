@@ -6,7 +6,7 @@ import { DislikeOutlined, LikeOutlined, DislikeFilled, LikeFilled } from '@ant-d
 
 export default function Posts(props) {
   
-    const [likes, setLikes] = useState(0);
+  const [likes, setLikes] = useState(0);
   const [dislikes, setDislikes] = useState(0);
   const [action, setAction] = useState(null);
 

@@ -1,5 +1,5 @@
 
-import  React  from 'react';
+import React, { useState, useEffect } from 'react';
 import 'antd/dist/antd.css'
 import { Row, Col } from 'antd';
 import { withRouter } from 'react-router-dom';
@@ -16,29 +16,26 @@ const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
 
 
- class Myprofile extends React.Component {
-  state = {
-    collapsed: true,
-  };
-
-  onCollapse = collapsed => {
-    this.setState({ collapsed });
+function Myprofile(props) {
+  const [collapsed, setCollapsed] = useState(true);
+  const onCollapse = () => {
+    if(collapsed === true){
+      setCollapsed(false);
+    }else{
+      setCollapsed(true);
+    }
   };
   
-  navtoProfile() {
-    this.props.history.push("/myprofile");
+  function navtoFeed() {
+    props.history.push("/");
   }
-  navtoFeed() {
-    this.props.history.push("/");
-  }
-  render() {
-    const { collapsed } = this.state;
+  
     return (
       <Layout style={{ minHeight: '100vh' }}>
-        <Sider collapsible collapsed={collapsed} onCollapse={this.onCollapse}>
+        <Sider collapsible collapsed={collapsed} onCollapse={onCollapse}>
           <div className="logo" />
           <Menu theme="dark" defaultSelectedKeys={['2']} mode="inline">
-            <Menu.Item onClick={this.navtoFeed.bind(this)} key="1" icon={<MacCommandOutlined />}>
+            <Menu.Item onClick={navtoFeed} key="1" icon={<MacCommandOutlined />}>
               Feed
             </Menu.Item>
             <Menu.Item key="2" icon={<UserOutlined />}>
@@ -83,7 +80,7 @@ const { SubMenu } = Menu;
         </Layout>
       </Layout>
     );
-  }
+  
 }
 
 export default withRouter (Myprofile);
