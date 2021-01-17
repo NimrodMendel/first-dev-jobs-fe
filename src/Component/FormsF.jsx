@@ -1,99 +1,68 @@
 import { Input } from 'antd';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from 'antd';
 import { Form } from 'antd';
 import { Alert } from 'antd';
 import Posts from './Posts';
 
-export default class FormsF extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      loadings: [],
-      posts:[],
-        jobTitle: '',
-        description: '',
-        validErr: false
-    };
+export default function FormsF(){
 
-    this.handleChangeJobTitle = this.handleChangeJobTitle.bind(this);
-    this.handleChangeDescription = this.handleChangeDescription.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
+  const [posts, setPosts] = useState([]);
+  const [jobTitle, setJobTitle] = useState('');
+  const [description, setDescription] = useState('');
+  const [validErr, setValidErr] = useState('');
   
- 
-
-
-  handleChangeJobTitle(event) {
-    this.setState({jobTitle: event.target.value});
+  function handleChangeJobTitle(event) {
+    setJobTitle(event.target.value);
   }
-  handleChangeDescription(event) {
-    this.setState({description: event.target.value});
+  function handleChangeDescription(event) {
+    setDescription(event.target.value);
   }
-  handleSubmit(index) {
+  function handleSubmit() {
     let obj ={
-      jobTitle: this.state.jobTitle,
-      description: this.state.description
+      jobTitle: jobTitle,
+      description: description
     }
     if(obj.jobTitle !== '' && obj.description !== ''){
       
-      this.state.posts.push(obj);
+      let temp = posts;
+      temp.unshift(obj);
+      setPosts(temp)
+      
+      setDescription('');
+      setJobTitle('');
 
-      this.setState({description:''})
-      this.setState({jobTitle:''})
-
-      this.setState({validErr:false});
-      this.setState(({ loadings }) => {
-        const newLoadings = [...loadings];
-        newLoadings[index] = true;
-        return {
-          loadings: newLoadings,
-        };
-      });
-      setTimeout(() => {
-        this.setState(({ loadings }) => {
-          const newLoadings = [...loadings];
-          newLoadings[index] = false;
-  
-          return {
-            loadings: newLoadings,
-          };
-        });
-      }, 0);
+      setValidErr(false);
       
     }else{
-      this.setState({validErr:true});
+      setValidErr(true);
     }
     
   };
-
-  
-
-  render(){
     const { TextArea } = Input;
-    const { loadings } = this.state;
 
       return (
        <>
           <h1>Posts Jobs</h1>
           
           <Form>
-          <Input value={this.state.jobTitle} onChange={this.handleChangeJobTitle} style={{marginBottom:'10px'}} placeholder="Job Title" />
-          <TextArea value={this.state.description} onChange={this.handleChangeDescription} style={{marginBottom:'10px'}} placeholder="description"/>
-          <Button type="primary" loading={loadings[0]} onClick={() => this.handleSubmit(0)}>
+          <Input value={jobTitle} onChange={handleChangeJobTitle} style={{marginBottom:'10px'}} placeholder="Job Title" />
+          <TextArea value={description} onChange={handleChangeDescription} style={{marginBottom:'10px'}} placeholder="description"/>
+          <Button type="primary" onClick={() => handleSubmit(0)}>
               Post Job!
           </Button>
             </Form>
-          {this.state.validErr ? <Alert style={{marginTop:'10px'}} message="All fields are required!" type="error" /> : <></>}
-          {this.state.posts.map((post, index)=>{   
+          {validErr ? <Alert style={{marginTop:'10px'}} message="All fields are required!" type="error" /> : <></>}
+          {posts.map((post, index)=>{   
         return (
           <div key={index}>
-            <Posts />
+            <Posts post = {post} />
           </div>
         );   
     })}
+    
        </>
       );
-    }
+    
   
   }

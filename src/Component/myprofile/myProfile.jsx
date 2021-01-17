@@ -1,7 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
 import 'antd/dist/antd.css'
-import  FormsF from './FormsF'
 import { Row, Col } from 'antd';
 import { withRouter } from 'react-router-dom';
 import { Layout, Menu, Breadcrumb } from 'antd';
@@ -11,12 +10,13 @@ import {
   TeamOutlined,
   UserOutlined,
 } from '@ant-design/icons';
+import TabsP from './TabsP';
 
 const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
 
 
- function SideBar(props){
+function Myprofile(props) {
   const [collapsed, setCollapsed] = useState(true);
   const onCollapse = () => {
     if(collapsed === true){
@@ -26,21 +26,21 @@ const { SubMenu } = Menu;
     }
   };
   
-  function navtoProfile() {
-    props.history.push("/myprofile");
+  function navtoFeed() {
+    props.history.push("/");
   }
+  
     return (
       <Layout style={{ minHeight: '100vh' }}>
         <Sider collapsible collapsed={collapsed} onCollapse={onCollapse}>
           <div className="logo" />
-          <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
-            <Menu.Item key="1" icon={<MacCommandOutlined />}>
+          <Menu theme="dark" defaultSelectedKeys={['2']} mode="inline">
+            <Menu.Item onClick={navtoFeed} key="1" icon={<MacCommandOutlined />}>
               Feed
             </Menu.Item>
-            <Menu.Item onClick={navtoProfile} key="2" icon={<UserOutlined />}>
+            <Menu.Item key="2" icon={<UserOutlined />}>
               My Profile
             </Menu.Item>
-            
             {/* <SubMenu key="sub1" icon={<UserOutlined />} title="User">
               <Menu.Item key="3">Tom</Menu.Item>
               <Menu.Item key="4">Bill</Menu.Item>
@@ -57,10 +57,8 @@ const { SubMenu } = Menu;
         </Sider>
         <Layout className="site-layout">
           <Header className="site-layout-background" 
-          
           style={{ padding: 0 , color: 'white',paddingLeft: '20px' ,fontWeight:'bold'}}>
-            {'Welcome to <First Dev Jobs>' }
-            
+            {'Welcome to <First Dev Jobs>'}
           </Header>
           <Content style={{ margin: '0 16px' }}>
             <Breadcrumb style={{ margin: '16px 0' }}>
@@ -69,10 +67,10 @@ const { SubMenu } = Menu;
             </Breadcrumb>
             
             <Row justify="center">
-              <Col style={{display:'flex',justifyContent:'center', flexDirection:'column'}}  flex="500px">
-              {/* <img style={{height:'40px',width:'40px' ,borderRadius:'50%', marginLeft:'10px'}} 
-              src="https://lh3.googleusercontent.com/3FB4aBlPgFUbLlwV8OubG96v43-2uo4psD09PCpVSE2rkNM4gYMM0-epbQpOE4B6smp0CeGJdrL0pPGYql3vJ25H9ybK6-SBCpgkeThC6blp_ykwmExGft0ddpA7U4qjf5sxhmfEzmKE05XFXS4LRQaaGWaBVGh3bqo1MSuI-Tgl7_Cc-gQDM8s_p-TA5L8SwnwPW3QsoO35lZ62AGJQdpW5ZzLMMIoHf7gun7onJ3ayYEWPxgUPsq88BKVLMBQntd5t7tsRw2W8QHjVw5Ykj3o8px8UoAvBjAPeqC5U9OPq_yxAOux4XuIz1_JaeqRWXaL14FiS_dM0zhXFW-ZWPXAkNaIx7FyyFF1up0f27j4lN4CJwG-pE-o6GtBDFcrk2ZPpXo7KdROanVJ7dDz0DPX3FUbG9NsExD4ACvSb_CuJNtB0xZnZUULzITysEMwo0wwsMhGLf_mUqZxUqBc4ZGHm2B2z0X8NDB8iveH6Va7ccXhbpeGGpbuQVLvS8uvtHwvv0_SRKi4ezn1-KKOe-RAIzxvBAidNGUDxZ1TOI3IMT-N4wPrY6syDQoteczgR5EVwFvY9uV8ZzQW6JOYyfnN7awmIUYUQrMngKS6wmk22qpAzNGO-02OddBmoKZubggmx-GTy59wES8DVeHETxIw2m6ZICRwmHYBZvnRo4dyMg8R90SUuke5E_Isg5Q=s500-no?authuser=0"/> */}
-              <FormsF/>
+              <Col flex="500px">
+                <TabsP/>
+               
+                {/* need to Filled */}
               </Col>
             </Row>
 
@@ -85,4 +83,4 @@ const { SubMenu } = Menu;
   
 }
 
-export default withRouter (SideBar);
+export default withRouter (Myprofile);

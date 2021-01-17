@@ -4,10 +4,9 @@ import moment from 'moment';
 import { DislikeOutlined, LikeOutlined, DislikeFilled, LikeFilled } from '@ant-design/icons';
 
 
-export default function Posts() {
+export default function Posts(props) {
   
-  
-    const [likes, setLikes] = useState(0);
+  const [likes, setLikes] = useState(0);
   const [dislikes, setDislikes] = useState(0);
   const [action, setAction] = useState(null);
 
@@ -51,11 +50,12 @@ export default function Posts() {
         />
       }
       content={
+        <>
+        <h4>{props.post.jobTitle}</h4>
         <p>
-          We supply a series of design principles, practical patterns and high quality design
-          resources (Sketch and Axure), to help people create their product prototypes beautifully
-          and efficiently.
+          {props.post.description}
         </p>
+        </>
       }
       datetime={
         <Tooltip title={moment().format('YYYY-MM-DD HH:mm:ss')}>
