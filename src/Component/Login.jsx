@@ -14,8 +14,7 @@ import Container from "@material-ui/core/Container";
 import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
-import FormControl from "@material-ui/core/FormControl";
-import FormLabel from "@material-ui/core/FormLabel";
+
 //material-ui - end
 
 const useStyles = makeStyles((theme) => ({
@@ -84,9 +83,9 @@ export default function Login() {
             </Typography>
             <form className={classes.form} onSubmit={handleSubmit}>
               <RadioGroup
+                style={{ justifyContent: "center" }}
                 row
                 required
-                // defaultValue="privateUser"
                 onChange={(e) => {
                   setUserType(e.target.value);
                 }}

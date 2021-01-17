@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import ReactModal from "react-modal";
 
+//material-ui - start
+
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -10,12 +12,15 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Snackbar from "@material-ui/core/Snackbar";
-// import Grow from "@material-ui/core/Grow";
+import Radio from "@material-ui/core/Radio";
+import RadioGroup from "@material-ui/core/RadioGroup";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+//material-ui - end
+
 import Login from "./Login";
 import { signUpNewUser } from "../lip/api";
-import { Link } from "react-router-dom";
-import HomeTwoToneIcon from "@material-ui/icons/HomeTwoTone";
 import { validatePasswords } from "../lip/api";
+
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -37,13 +42,15 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SignUp() {
-  const [userName, setUserName] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [companyName, setCompanyName] = useState("");
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const [passwordErrorMessage, setPasswordErrorMessage] = useState("");
   const [isPasswordError, setIsPasswordError] = useState(false);
-
+  const [userType, setUserType] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const openModel = () => {
     setIsOpen(true);
@@ -56,11 +63,23 @@ export default function SignUp() {
 
   const handelSubmit = async (e) => {
     e.preventDefault();
-    const newUserObject = {
-      userName,
-      userEmail,
-      userPassword,
-    };
+    let newUserObject;
+    if (userType === "privateUser") {
+      newUserObject = {
+        firstName,
+        lastName,
+        userEmail,
+        userPassword,
+        userType,
+      };
+    } else {
+      newUserObject = {
+        companyName,
+        userEmail,
+        userPassword,
+        userType,
+      };
+    }
     const isPasswordsInvalid = await validatePasswords(
       newUserObject,
       passwordConfirmation
@@ -71,8 +90,8 @@ export default function SignUp() {
       setIsPasswordError(true);
       return;
     } else {
-      console.log("newUserObject :>> ", newUserObject);
       const signUpResult = await signUpNewUser(newUserObject);
+      console.log("signUpResult :>> ", signUpResult);
     }
   };
 
@@ -103,21 +122,81 @@ export default function SignUp() {
               Sign up
             </Typography>
             <form className={classes.form} onSubmit={handelSubmit}>
+              <RadioGroup
+                style={{ justifyContent: "center" }}
+                defaultValue="privateUser"
+                row
+                required
+                onChange={(e) => {
+                  setUserType(e.target.value);
+                }}
+              >
+                <FormControlLabel
+                  style={{ justifyContent: "center" }}
+                  value="privateUser"
+                  control={<Radio color="primary" />}
+                  label="private user"
+                  labelPlacement="top"
+                />
+                <FormControlLabel
+                  value="companyUser"
+                  control={<Radio color="primary" />}
+                  label="company"
+                  labelPlacement="top"
+                />
+              </RadioGroup>
               <Grid container spacing={2}>
-                <Grid item xs={12} sm={12}>
-                  <TextField
-                    onChange={(e) => {
-                      setUserName(e.target.value);
-                    }}
-                    variant="outlined"
-                    required
-                    fullWidth
-                    id="userName"
-                    label="user Name"
-                    name="userName"
-                    autoComplete="userName"
-                  />
-                </Grid>
+                {userType === "privateUser" ? (
+                  <>
+                    <Grid item xs={12} sm={6}>
+                      <TextField
+                        onChange={(e) => {
+                          setFirstName(e.target.value);
+                        }}
+                        variant="outlined"
+                        required
+                        fullWidth
+                        id="firstName"
+                        label="First Name"
+                        name="firstName"
+                        autoComplete="firstName"
+                      />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                      <TextField
+                        onChange={(e) => {
+                          setLastName(e.target.value);
+                        }}
+                        variant="outlined"
+                        required
+                        fullWidth
+                        id="lastName"
+                        label="Last Name"
+                        name="lastName"
+                        autoComplete="lastName"
+                      />
+                    </Grid>{" "}
+                  </>
+                ) : (
+                  <>
+                    {" "}
+                    <Grid item xs={12} sm={12}>
+                      <TextField
+                        onChange={(e) => {
+                          setCompanyName(e.target.value);
+                        }}
+                        variant="outlined"
+                        required
+                        fullWidth
+                        id="companyName"
+                        label="Company Name"
+                        name="companyName"
+                        autoComplete="companyName"
+                      />
+                    </Grid>{" "}
+                  </>
+                )}
+
                 <Grid item xs={12}>
                   <TextField
                     onChange={(e) => {
@@ -139,7 +218,6 @@ export default function SignUp() {
                       if (isPasswordError) {
                         setIsPasswordError(false);
                       }
-
                       setUserPassword(e.target.value);
                     }}
                     variant="outlined"
@@ -180,13 +258,6 @@ export default function SignUp() {
               >
                 Sign Up
               </Button>
-              <Grid container justify="flex-end">
-                <Grid item>
-                  <div>
-                    Already have an account? <Login />
-                  </div>
-                </Grid>
-              </Grid>
             </form>
           </div>
         </Container>
