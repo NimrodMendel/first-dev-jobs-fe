@@ -1,10 +1,15 @@
-import { Tabs } from 'antd';
+import { Tabs, Breadcrumb } from 'antd';
 import React from 'react';
 import  MyProfileTab  from './myProfileTab';
 import UploadCV from './UploadCV';
 const { TabPane } = Tabs;
 
 const TabsP = () => (
+  <>
+  <Breadcrumb style={{ margin: '16px 0' }}>
+              <Breadcrumb.Item>home</Breadcrumb.Item>
+              <Breadcrumb.Item>myprofile</Breadcrumb.Item>
+            </Breadcrumb>
   <Tabs defaultActiveKey="1" centered>
     <TabPane style={{float:'right'}} tab="Your Profile" key="1">
       <MyProfileTab/>
@@ -16,6 +21,7 @@ const TabsP = () => (
       Your Save Jobs
     </TabPane>
   </Tabs>
+  </>
 );
 
 export default TabsP;

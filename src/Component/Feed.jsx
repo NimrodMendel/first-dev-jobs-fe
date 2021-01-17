@@ -1,11 +1,11 @@
 import { Input } from 'antd';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Button } from 'antd';
 import { Form } from 'antd';
-import { Alert } from 'antd';
+import { Alert, Breadcrumb } from 'antd';
 import Posts from './Posts';
 
-export default function FormsF(){
+export default function Feed(){
 
   const [posts, setPosts] = useState([]);
   const [jobTitle, setJobTitle] = useState('');
@@ -43,6 +43,10 @@ export default function FormsF(){
 
       return (
        <>
+          <Breadcrumb style={{ margin: '16px 0' }}>
+              <Breadcrumb.Item>home</Breadcrumb.Item>
+              <Breadcrumb.Item>feed</Breadcrumb.Item>
+            </Breadcrumb>
           <h1>Posts Jobs</h1>
           
           <Form>

@@ -1,4 +1,4 @@
-import { Form, Input, InputNumber, Button } from 'antd';
+import { Form, Input, Button } from 'antd';
 const layout = {
   labelCol: {
     span: 4,
@@ -26,6 +26,8 @@ const MyProfileTab = () => {
   window.innerWidth < 575 ? btnResponsiv = 0 : btnResponsiv = 4
 
   return (
+    <>
+    
     <Form {...layout} name="nest-messages" onFinish={onFinish} validateMessages={validateMessages}>
       <Form.Item
         name={['user', 'name']}
@@ -62,6 +64,7 @@ const MyProfileTab = () => {
         </Button>
       </Form.Item>
     </Form>
+    </>
   );
 };
 

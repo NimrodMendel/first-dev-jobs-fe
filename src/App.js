@@ -1,8 +1,7 @@
 import './App.css';
-import Main from './Component/Main';
+import NavBar from './Component/NavBar';
 import 'rsuite/lib/styles/index.less';
 import React, { useState, useEffect } from 'react';
-import MyProfile from './Component/myprofile/myProfile'
 import {
   BrowserRouter as Router,
   Switch,
@@ -19,13 +18,13 @@ export default function App() {
     <Router>
         <Switch>
           <Route exact path="/">
-          <Main/>
+          <NavBar/>
           </Route>
           <Route path="/myprofile">
-            <MyProfile/>
+          <NavBar/>
           </Route>
           <Route path="/dashboard">
-            
+          <NavBar/>
           </Route>
         </Switch>
     </Router>

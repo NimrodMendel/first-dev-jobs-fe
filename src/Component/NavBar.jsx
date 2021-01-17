@@ -1,23 +1,27 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import 'antd/dist/antd.css'
+import  Feed from './Feed'
 import { Row, Col } from 'antd';
 import { withRouter } from 'react-router-dom';
-import { Layout, Menu, Breadcrumb } from 'antd';
+import { Layout, Menu } from 'antd';
 import {
   MacCommandOutlined,
   FileOutlined,
   TeamOutlined,
   UserOutlined,
 } from '@ant-design/icons';
-import TabsP from './TabsP';
-
+import {
+  Link
+} from "react-router-dom";
+import TabsP from './myprofile/TabsP'
 const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
 
 
-function Myprofile(props) {
+ function NavBar(props){
   const [collapsed, setCollapsed] = useState(true);
+  const [nav, setNav] = useState(1);
   const onCollapse = () => {
     if(collapsed === true){
       setCollapsed(false);
@@ -26,26 +30,24 @@ function Myprofile(props) {
     }
   };
   
-  function navtoFeed() {
-    props.history.push("/");
-  }
-  
+    let navResult;
+    if(nav === 1){
+      navResult = <Feed/>;
+    }
+    if(nav === 2){
+      navResult = <TabsP/>;
+    }
     return (
       <Layout style={{ minHeight: '100vh' }}>
         <Sider collapsible collapsed={collapsed} onCollapse={onCollapse}>
           <div className="logo" />
-          <Menu theme="dark" defaultSelectedKeys={['2']} mode="inline">
-            <Menu.Item onClick={navtoFeed} key="1" icon={<MacCommandOutlined />}>
-              Feed
+          <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
+            <Menu.Item onClick={() => setNav(1)} key="1" icon={<MacCommandOutlined />}>
+            <Link to='/'>My Profile</Link>
             </Menu.Item>
-            <Menu.Item key="2" icon={<UserOutlined />}>
-              My Profile
+            <Menu.Item onClick={() => setNav(2)} key="2" icon={<UserOutlined />}>
+            <Link to='/myprofile'>My Profile</Link>
             </Menu.Item>
-            {/* <SubMenu key="sub1" icon={<UserOutlined />} title="User">
-              <Menu.Item key="3">Tom</Menu.Item>
-              <Menu.Item key="4">Bill</Menu.Item>
-              <Menu.Item key="5">Alex</Menu.Item>
-            </SubMenu> */}
             <SubMenu key="sub2" icon={<TeamOutlined />} title="Team">
               <Menu.Item key="6">Team 1</Menu.Item>
               <Menu.Item key="8">Team 2</Menu.Item>
@@ -57,25 +59,21 @@ function Myprofile(props) {
         </Sider>
         <Layout className="site-layout">
           <Header className="site-layout-background" 
+          
           style={{ padding: 0 , color: 'white',paddingLeft: '20px' ,fontWeight:'bold'}}>
-            {'Welcome to <First Dev Jobs>'}
-          </Header>
-          <Content style={{ margin: '0 16px' }}>
-            <Breadcrumb style={{ margin: '16px 0' }}>
-              {/* <Breadcrumb.Item>User</Breadcrumb.Item>
-              <Breadcrumb.Item>Bill</Breadcrumb.Item> */}
-            </Breadcrumb>
+            {'Welcome to <First Dev Jobs>' }
             
+          </Header>
+          {/* NavBar Navigation*/}
+          {/* ---------------------------------------------- */}
+          <Content style={{ margin: '0 16px' }}>
             <Row justify="center">
-              <Col flex="500px">
-                <TabsP/>
-               
-                {/* need to Filled */}
+              <Col style={{display:'flex',justifyContent:'center', flexDirection:'column'}}  flex="500px">
+              {navResult}
               </Col>
             </Row>
-
-        
           </Content>
+          {/* ---------------------------------------------- */}
           <Footer style={{ textAlign: 'center' }}>{'<First Dev Jobs ©2021>'}</Footer>
         </Layout>
       </Layout>
@@ -83,4 +81,4 @@ function Myprofile(props) {
   
 }
 
-export default withRouter (Myprofile);
+export default withRouter (NavBar);
