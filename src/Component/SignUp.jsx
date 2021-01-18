@@ -45,12 +45,14 @@ export default function SignUp() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [companyName, setCompanyName] = useState("");
-  const [userEmail, setUserEmail] = useState("");
-  const [userPassword, setUserPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+
+  const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const [passwordErrorMessage, setPasswordErrorMessage] = useState("");
   const [isPasswordError, setIsPasswordError] = useState(false);
-  const [userType, setUserType] = useState("");
+  const [role, setRole] = useState("Employee");
   const [isOpen, setIsOpen] = useState(false);
   const openModel = () => {
     setIsOpen(true);
@@ -64,22 +66,28 @@ export default function SignUp() {
   const handelSubmit = async (e) => {
     e.preventDefault();
     let newUserObject;
-    if (userType === "privateUser") {
+    if (role === "Employee") {
       newUserObject = {
         firstName,
         lastName,
-        userEmail,
-        userPassword,
-        userType,
+        email,
+        password,
+        phoneNumber,
+        role,
       };
     } else {
       newUserObject = {
         companyName,
-        userEmail,
-        userPassword,
-        userType,
+        email,
+        password,
+        phoneNumber,
+        role,
       };
     }
+    console.log("password :>> ", password);
+
+    console.log("passwordConfirmation :>> ", passwordConfirmation);
+
     const isPasswordsInvalid = await validatePasswords(
       newUserObject,
       passwordConfirmation
@@ -124,29 +132,29 @@ export default function SignUp() {
             <form className={classes.form} onSubmit={handelSubmit}>
               <RadioGroup
                 style={{ justifyContent: "center" }}
-                defaultValue="privateUser"
+                defaultValue="Employee"
                 row
                 required
                 onChange={(e) => {
-                  setUserType(e.target.value);
+                  setRole(e.target.value);
                 }}
               >
                 <FormControlLabel
                   style={{ justifyContent: "center" }}
-                  value="privateUser"
+                  value="Employee"
                   control={<Radio color="primary" />}
                   label="private user"
                   labelPlacement="top"
                 />
                 <FormControlLabel
-                  value="companyUser"
+                  value="Employer"
                   control={<Radio color="primary" />}
                   label="company"
                   labelPlacement="top"
                 />
               </RadioGroup>
               <Grid container spacing={2}>
-                {userType === "privateUser" ? (
+                {role === "Employee" ? (
                   <>
                     <Grid item xs={12} sm={6}>
                       <TextField
@@ -200,7 +208,7 @@ export default function SignUp() {
                 <Grid item xs={12}>
                   <TextField
                     onChange={(e) => {
-                      setUserEmail(e.target.value);
+                      setEmail(e.target.value);
                     }}
                     variant="outlined"
                     required
@@ -215,10 +223,26 @@ export default function SignUp() {
                 <Grid item xs={12}>
                   <TextField
                     onChange={(e) => {
+                      setPhoneNumber(e.target.value);
+                    }}
+                    variant="outlined"
+                    required
+                    fullWidth
+                    id="phoneNumber"
+                    type="tel"
+                    label="Phone Number"
+                    name="phoneNumber"
+                    autoComplete="phoneNumber"
+                  />
+                </Grid>
+
+                <Grid item xs={12}>
+                  <TextField
+                    onChange={(e) => {
                       if (isPasswordError) {
                         setIsPasswordError(false);
                       }
-                      setUserPassword(e.target.value);
+                      setPassword(e.target.value);
                     }}
                     variant="outlined"
                     required

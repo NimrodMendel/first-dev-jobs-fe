@@ -3,14 +3,16 @@ import axios from "axios";
 const baseUrl = `http://localhost:5000`;
 
 export const validatePasswords = (obj, userPasswordConfirmation) => {
-  if (obj.userPassword !== userPasswordConfirmation) {
+  if (obj.password !== userPasswordConfirmation) {
     return "passwords don't match";
-  } else if (obj.userPassword.length < 4) {
+  } else if (obj.password.length < 4) {
     return "passwords must be at least 4 characters long";
   } else {
     return null;
   }
 };
+
+// message: "user validation failed: role: user must have a role, phoneNumber: Phone number is required"
 
 export const signUpNewUser = async (obj) => {
   let result;

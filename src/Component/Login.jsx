@@ -60,7 +60,11 @@ export default function Login() {
       console.log("email :>> ", email);
       console.log("password :>> ", password);
       const loginObject = { userType, email, password };
-      const loginRsult = await loginUser(loginObject);
+      const loginResult = await loginUser(loginObject);
+      console.log("loginResult :>> ", loginResult);
+      {
+        /* 6005b1cceb1d942a289b5f8c */
+      }
     }
   };
 
